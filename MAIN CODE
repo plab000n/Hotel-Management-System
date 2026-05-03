@@ -1,0 +1,135 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Room {
+    int roomNumber;
+    boolean isBooked;
+    String customerName;
+    int days;
+
+    Room(int roomNumber) {
+        this.roomNumber = roomNumber;
+        this.isBooked = false;
+        this.customerName = "";
+        this.days = 0;
+    }
+}
+
+public class HotelManagementSystem {
+
+    static ArrayList<Room> rooms = new ArrayList<Room>();
+    static final int PRICE = 1000;
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Create 5 rooms
+        for (int i = 101; i <= 110; i++) {
+            rooms.add(new Room(i));
+        }
+
+        while (true) {
+            System.out.println("\n.....HOTEL MENU.....");
+            System.out.println("1. ...View Rooms...");
+            System.out.println("2. ...Book Room...");
+            System.out.println("3. ...Check-Out...");
+            System.out.println("4. ...Exit...");
+            System.out.print(".....Choose: ");
+
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    viewRooms();
+                    break;
+                case 2:
+                    bookRoom(sc);
+                    break;
+                case 3:
+                    checkout(sc);
+                    break;
+                case 4:
+                    System.out.println("Thank you!");
+                    return;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+
+    static void viewRooms() {
+        System.out.println("\nRoom Status:");
+        for (int i = 0; i < rooms.size(); i++) {
+            Room r = rooms.get(i);
+
+            if (r.isBooked) {
+                System.out.println("Room " + r.roomNumber + " → Booked by (" + r.customerName + ")");
+            } else {
+                System.out.println("Room " + r.roomNumber + " → Available");
+            }
+        }
+    }
+
+    static void bookRoom(Scanner sc) {
+        System.out.print("Enter Room Number: ");
+        int num = sc.nextInt();
+
+        for (int i = 0; i < rooms.size(); i++) {
+            Room r = rooms.get(i);
+
+            if (r.roomNumber == num) {
+
+                if (r.isBooked) {
+                    System.out.println(" Room already booked!");
+                    return;
+                }
+
+            
+                System.out.println("Customer Name: ");
+                r.customerName = sc.next();
+
+                System.out.print("Days: ");
+                r.days = sc.nextInt();
+                r.isBooked = true;
+
+           System.out.println(".....Room booked successfully!......");
+                return;
+            }
+        }
+        System.out.println(".....Room not found!......");
+    }
+
+    static void checkout(Scanner sc) {
+        System.out.print("Enter Room Number: ");
+        int num = sc.nextInt();
+
+        for (int i = 0; i < rooms.size(); i++) {
+            Room r = rooms.get(i);
+
+            if (r.roomNumber == num) {
+
+                if (!r.isBooked) {
+                    System.out.println(".....Room is not booked!......n");
+                    return;
+                }
+
+                int bill = r.days * PRICE;
+
+                System.out.println("\n--- BILL ---\n");
+                System.out.println("Customer: " + r.customerName);
+                System.out.println("Days: " + r.days);
+                System.out.println("Total Bill: " + bill);
+
+                ///check out korar por sob abar empty korte hbe
+                r.isBooked = false;
+                r.customerName = "";
+                r.days = 0;
+
+                System.out.println("......Check-out complete!.....");
+                return;
+            }
+        }
+        System.out.println(".....Room not found!.....");
+    }
+}
