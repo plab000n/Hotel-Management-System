@@ -116,7 +116,7 @@ public class HotelManagementSystem {
 
                 int bill = r.days * PRICE;
 
-                System.out.println("\n--- BILL ---\n");
+                System.out.println("\n---...BILL...---\n");
                 System.out.println("Customer: " + r.customerName);
                 System.out.println("Days: " + r.days);
                 System.out.println("Total Bill: " + bill);
